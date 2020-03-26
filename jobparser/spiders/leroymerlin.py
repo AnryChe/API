@@ -19,12 +19,14 @@ class LeroymerlinSpider(scrapy.Spider):
         for link in items_list:
             yield response.follow(link, callback=self.item_parse)
 
-    def item_parse(self, response: HtmlResponse):
 
-        item_name = response.xpath("//div[@class='_3mfro CuJz5 PlM3e _2JVkc _3LJqf']/text()").extract()[0]  # Экстракт не полностью помогает, выдает список. Если чезер css - проще и лучше
+    def item_parse(self, response: HtmlResponse):
+        item_name = response.xpath("//h1[@itemprop='name']/text").extract()
+        print(item_name)
         # Собираем пока просто описание товара, характеристики соберу позднее
-        item_desc = response.xpath("//uc-pdp-section-vlimited[@class='section__vlimit']//p/text()").extract()
-        item_photo_link = response.xpath("//img[@alt='product image']/data-origin").extract()
+        item_desc = response.xpath("//*[@class='section__vlimit']//p/text()").extract()
+        item_def = response.xpath("//*[@class='def-list']").extract()
+        item_photo_link = response.xpath("//img[@alt='product image']/@data-origin").extract()
         item_price = response.xpath("//span[@slot='price']/text()").extract()
         link = response.url()
-        yield JobparserItem(item_name=item_name, item_price=item_price, link=link, site_name=self.site_name)
+        yield JobparserItem(item_name=item_name, item_price=item_price, link=link, site_name=self.site_name, item_desc=item_desc, item_def=item_def, item_photo_link=item_photo_link)

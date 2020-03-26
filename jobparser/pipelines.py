@@ -49,7 +49,22 @@ class JobparserPipeline(object):
             yield superjobItem(vac_name=item.name, salary_max=salary_max, salary_min=salary_min, curency=curency, link=item.link, site_name=item.site_name) #не уверен насколько правильно, если здесь указать все поля, то лишние удалять не нужно?
 
 
+class ItemsPipeline(object):
+    def __init__(self):
+        client = MongoClient('localhost', 27017)
+        self.mongobase = client.lm_item_01
 
-# class SalaryPipeline(object):
-#     def process_item(self, item, spider):
-#         return item
+
+
+    def process_item(self, item, spider):
+        collection = self.mongobase[spider.name]
+        pass
+        collection.insert_one(item)
+        return item
+
+
+    def item_def_separ(self, item):
+        for i in item.item_def:
+            pass
+
+

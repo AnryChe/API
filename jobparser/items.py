@@ -38,5 +38,6 @@ class LMItem(scrapy.Item):
     item_photo_link = scrapy.Field()
     item_price = scrapy.Field()
     item_desc = scrapy.Field()
+    item_def = scrapy.Field()
     link = scrapy.Field()
     site_name = scrapy.Field()
