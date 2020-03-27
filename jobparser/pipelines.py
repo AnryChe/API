@@ -14,7 +14,6 @@ class JobparserPipeline(object):
         self.mongobase = client.vacansy_305
 
 
-
     def process_item(self, item, spider):
         collection = self.mongobase[spider.name]
         self.salary_processing(item)
@@ -55,7 +54,6 @@ class ItemsPipeline(object):
         self.mongobase = client.lm_item_01
 
 
-
     def process_item(self, item, spider):
         collection = self.mongobase[spider.name]
         pass
@@ -63,8 +61,10 @@ class ItemsPipeline(object):
         return item
 
 
-    def item_def_separ(self, item):
+    def item_def_separator(self, item):
         for i in item.item_def:
             pass
+
+
 
 

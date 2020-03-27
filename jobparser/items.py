@@ -31,6 +31,7 @@ class superjobItem(scrapy.Item):
     site_name = scrapy.Field()
     curency = scrapy.Field()
 
+
 class LMItem(scrapy.Item):
     # define the fields for your item here like:
     _id = scrapy.Field()
