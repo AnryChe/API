@@ -43,9 +43,10 @@ def get_message(links):
     for i in links:
         link = i.get_attribute('href')
         driver.get(link)
-
+        time.sleep(5)
 # ДВА ВАРИАНТА, С ВАЙТОМ И БЕЗ. Вайт вываливается в эксепт, хотя элемент на страничке есть  (xpath находит по  //*[@class='readmsg__head-contact main']
 # Вариант 1, с wait:
+
         try:
             from_who = WebDriverWait(driver, 20).until(
                 EC.presence_of_element_located((By.CLASS_NAME, 'readmsg__head-contact main'))
@@ -55,11 +56,6 @@ def get_message(links):
         finally:
             pass
         from_who = from_who.get_attribute('data-email')
-# Вариант 2. Без wait
-
-        from_who = driver.find_element_by_class_name('readmsg__head-contact').get_attribute('data-email')
-        print(from_who)
-
 
 
         shipping_data = driver.find_element_by_class_name('readmsg__head-date')
@@ -69,7 +65,7 @@ def get_message(links):
                        'Data':shipping_data,
                        'theme':theme_letter,
                        'Letter':body_letter}
-        # un_base.insert_one(got_letter)
+        un_base.insert_one(got_letter)
 
 
 my_login = 'kjdfshgmnjkew'
@@ -79,28 +75,3 @@ un_base = client.ukr_net
 
 get_message(spam_list(get_messages_ukrnet(my_login, my_password)))
 
-# //*[@class='readmsg__head-contact main']
-    # yield pass
-#
-# //a[@class='msglist__row']
-
-# profile = driver.find_element_by_xpath("//a[@class='avatar']")  #@href?
-# driver.get(profile.get_attribute('href'))
-#
-
-# edit_profile = driver.find_element_by_class_name('text-sm')
-# driver.get(edit_profile.get_attribute('href'))
-#
-# name = driver.find_element_by_name('user[first_name]')
-# name.send_keys(Keys.CONTROL + 'a')
-# name.send_keys(Keys.BACK_SPACE)
-#
-# gender = driver.find_element_by_name('user[gender]')
-# # options = gender.find_elements_by_tag_name('option')
-# #
-# # for option in options:
-# #     if option.text == '�������':
-# #         option.click()
-#
-# select = Select(driver.find_element_by_name('user[gender]'))
-# select.select_by_value('1')
